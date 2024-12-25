@@ -4,6 +4,7 @@ variable "aws_region" {
   description = "The AWS Region to deploy"
   type        = string
 }
+# trigger
 
 variable "gcp_project_id" {
   description = "The GCP Project ID"
