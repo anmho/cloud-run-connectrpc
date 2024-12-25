@@ -1,5 +1,5 @@
 
 module "s3" {
   source = "./modules/aws/s3"
-  region = "us-west-2"
+  region = var.aws_region
 }
