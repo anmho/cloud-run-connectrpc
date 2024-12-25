@@ -15,10 +15,6 @@ check:
 	@go vet ./...
 	@golangci-lint run ./...
 
-openapi:
-	@./bin/api openapi > openapi.yaml
-
-
 .PHONY: mocks
 mocks: # Generate mocks
 	@go generate ./...
@@ -27,7 +23,6 @@ clean:
 	@rm -rf ./bin
 
 deps:
-	@go install "github.com/air-verse/air@v1.61.1"
 	@go install "github.com/vektra/mockery/v2@v2.49.1"
 	
 fmt:
@@ -52,7 +47,7 @@ push:
 	@echo docker.io/$(IMAGE_NAME):$(TAG) | tee image.txt
 
 watch:
-	@air
+	@wgo run ./cmd/api
 
 # Database commands
 # Startup the development database

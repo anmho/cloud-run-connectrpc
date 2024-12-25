@@ -22,7 +22,6 @@ variable "gcp_region" {
 variable "api_image_url" {
   description = "Image URL to run on Cloud Run"
   type        = string
-  #   default     = "docker.io/anmho/happened:latest"
   default = "docker.io/hashicorp/http-echo"
 }
 

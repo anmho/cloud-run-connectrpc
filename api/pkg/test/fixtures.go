@@ -3,16 +3,15 @@ package test
 import (
 	"context"
 	"database/sql"
-	"encoding/json"
+	"log"
+	"testing"
+	"time"
+
 	_ "github.com/jackc/pgx/v5/stdlib" // Import the pgx driver for database/sql
 	"github.com/stretchr/testify/require"
 	"github.com/testcontainers/testcontainers-go"
 	"github.com/testcontainers/testcontainers-go/modules/postgres"
 	"github.com/testcontainers/testcontainers-go/wait"
-	"io"
-	"log"
-	"testing"
-	"time"
 )
 
 func MakeLocalDB(t *testing.T) *sql.DB {
@@ -50,11 +49,4 @@ func MakeLocalDB(t *testing.T) *sql.DB {
 	})
 	// Return the db instance and a cleanup function
 	return db
-}
-
-func DecodeAs[T any](body io.Reader, t *testing.T) T {
-	var data T
-	err := json.NewDecoder(body).Decode(&data)
-	require.NoError(t, err)
-	return data
 }
