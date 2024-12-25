@@ -2,7 +2,14 @@
 set -e
 
 # Ensure all required environment variables are set
-REQUIRED_ENV_VARS=("CLERK_SECRET_KEY" "DB_HOST" "DB_USER" "DB_PASS" "DB_NAME" "DB_PORT")
+REQUIRED_ENV_VARS=(
+    "CLERK_SECRET_KEY" 
+    "DB_HOST"
+    "DB_USER"
+    "DB_PASS"
+    "DB_NAME"
+    "DB_PORT"
+)
 for var in "${REQUIRED_ENV_VARS[@]}"; do
   if [ -z "${!var}" ]; then
     echo "Error: Environment variable $var is not set."
