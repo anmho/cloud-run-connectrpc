@@ -1,6 +1,7 @@
 package main
 
 import (
+	"errors"
 	"fmt"
 	"net/http"
 
@@ -41,17 +42,20 @@ func main() {
 		// for these fully-qualified protobuf service names, so you'd more likely
 		// reference userv1.UserServiceName and groupv1.GroupServiceName.
 	  )
-	  mux.Handle(grpcreflect.NewHandlerV1(reflector))
-	  // Many tools still expect the older version of the server reflection API, so
-	  // most servers should mount both handlers.
-	  mux.Handle(grpcreflect.NewHandlerV1Alpha(reflector))
+
+	mux.Handle(grpcreflect.NewHandlerV1(reflector))
+	// Many tools still expect the older version of the server reflection API, so
+	// most servers should mount both handlers.
+	mux.Handle(grpcreflect.NewHandlerV1Alpha(reflector))
 	path, handler := greetv1connect.NewGreetServiceHandler(greeter)
 	fmt.Println(path)
 	mux.Handle(path, handler)
-	http.ListenAndServe(
+	err := http.ListenAndServe(
 		":8080",
 		// Use h2c so we can serve HTTP/2 without TLS.
 		h2c.NewHandler(mux, &http2.Server{}),
 	)
-
+	if !errors.Is(err, http.ErrServerClosed) {
+		panic(err)
+	}
 }

@@ -11,7 +11,6 @@ import (
 
 
 func TestServer_Greet(t *testing.T) {
-
 	tests := []struct{
 		desc string
 		request *connect.Request[greetv1.GreetRequest]
