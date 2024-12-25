@@ -1,0 +1,36 @@
+root = "."
+testdata_dir = "testdata"
+tmp_dir = "tmp"
+
+[build]
+  args_bin = []
+  bin = "./bin/api --stage development"
+  cmd = "make -C ../"
+  exclude_file = ["openapi.yaml"]
+  exclude_regex = ["_test.go", "openapi.yaml"]
+  exclude_unchanged = false
+  log = "build-errors.log"
+
+[color]
+  app = ""
+  build = "yellow"
+  main = "magenta"
+  runner = "green"
+  watcher = "cyan"
+
+[log]
+  main_only = false
+  silent = false
+  time = false
+
+[misc]
+  clean_on_exit = false
+
+[proxy]
+  app_port = 0
+  enabled = false
+  proxy_port = 0
+
+[screen]
+  clear_on_rebuild = false
+  keep_scroll = true
