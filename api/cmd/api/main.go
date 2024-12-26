@@ -27,7 +27,7 @@ type Stage = string
 
 const (
 	Development Stage = "development"
-	Production = "production"
+	Production Stage = "production"
 )
 
 func main() {
