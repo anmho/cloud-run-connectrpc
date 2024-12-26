@@ -39,7 +39,9 @@ func main() {
 	mux.Handle(greetv1connect.NewGreetServiceHandler(greeter))
 
 	mux.HandleFunc("/hello", func(w http.ResponseWriter, r *http.Request) {
-		w.Write([]byte("hello world"))
+		if _, err := w.Write([]byte("hello world")); err != nil {
+			http.Error(w, "unexpected error", http.StatusInternalServerError)
+		}
 	})
 
 	reflector := grpcreflect.NewStaticReflector(
