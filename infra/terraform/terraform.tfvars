@@ -1,5 +1,5 @@
 aws_region="us-west-2"
-gcp_project_id="happened-441602"
+gcp_project_id="rocket-rides-445819"
 gcp_region="us-west1"
-api_name="happened-api"
+api_name="rocket-rides-api"
 api_port="8080"
