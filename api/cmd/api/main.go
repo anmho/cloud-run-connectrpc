@@ -37,8 +37,13 @@ func main() {
 	
 	
 	mux.Handle(greetv1connect.NewGreetServiceHandler(greeter))
+	mux.HandleFunc("GET /healthz", func(w http.ResponseWriter, r *http.Request) {
+		if _, err := w.Write([]byte("ok")); err != nil {
+			http.Error(w, "unexpected error", http.StatusInternalServerError)
+		}
+	})
 
-	mux.HandleFunc("/hello", func(w http.ResponseWriter, r *http.Request) {
+	mux.HandleFunc("GET /hello", func(w http.ResponseWriter, r *http.Request) {
 		if _, err := w.Write([]byte("hello world")); err != nil {
 			http.Error(w, "unexpected error", http.StatusInternalServerError)
 		}
