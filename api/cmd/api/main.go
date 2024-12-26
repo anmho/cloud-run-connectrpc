@@ -2,7 +2,6 @@ package main
 
 import (
 	"errors"
-	"fmt"
 	"net/http"
 
 	"connectrpc.com/grpcreflect"
@@ -28,13 +27,20 @@ type Stage = string
 
 const (
 	Development Stage = "development"
-	Production  Stage = "production"
+	Production = "production"
 )
 
 func main() {
-	
 	greeter := &server.GreetServer{}
 	mux := http.NewServeMux()
+
+	
+	
+	mux.Handle(greetv1connect.NewGreetServiceHandler(greeter))
+
+	mux.HandleFunc("/hello", func(w http.ResponseWriter, r *http.Request) {
+		w.Write([]byte("hello world"))
+	})
 
 	reflector := grpcreflect.NewStaticReflector(
 		"protos.greet.v1.GreetService",
@@ -47,13 +53,11 @@ func main() {
 	// Many tools still expect the older version of the server reflection API, so
 	// most servers should mount both handlers.
 	mux.Handle(grpcreflect.NewHandlerV1Alpha(reflector))
-	path, handler := greetv1connect.NewGreetServiceHandler(greeter)
-	fmt.Println(path)
-	mux.Handle(path, handler)
 	err := http.ListenAndServe(
 		":8080",
 		// Use h2c so we can serve HTTP/2 without TLS.
 		h2c.NewHandler(mux, &http2.Server{}),
+		// mux,
 	)
 	if !errors.Is(err, http.ErrServerClosed) {
 		panic(err)
